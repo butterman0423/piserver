@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "piserver",
   "private": true,
   "sideEffects": false,
   "type": "module",
