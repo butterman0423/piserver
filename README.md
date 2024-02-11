@@ -1,3 +1,6 @@
+# React Learn Resource
+https://react.dev/learn/describing-the-ui
+
 # Welcome to Remix!
 
 - [Remix Docs](https://remix.run/docs)
