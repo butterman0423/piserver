@@ -2,7 +2,7 @@ import { EntryInfo } from "src/explorer"
 import Entry from "./entry"
 
 export default function Explorer({ entries } : { entries: Array<EntryInfo> }) {
-    const entryEls = entries.map(data => <Entry entry={data}/>)
+    const entryEls = entries.map((data, idx) => <Entry key={idx} entry={data}/>)
     
     return (
         <div>
