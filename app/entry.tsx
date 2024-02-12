@@ -1,6 +1,10 @@
-export default function Entry({entryName, entryType}: {entryName: string, entryType: string}) {
+import { EntryInfo } from "src/explorer"
+
+export default function Entry({ entry }: { entry: EntryInfo }) {
+    const { name, extension } = entry;
+    
     return <div>
         <img></img>
-        <p>{entryName}.{entryType}</p>
+        <p>{name}.{extension}</p>
     </div>
 }
