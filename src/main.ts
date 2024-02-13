@@ -1,4 +1,5 @@
-import express, { Express, Request, Response } from 'express'
+import type { Express, Request, Response } from 'express'
+import express from 'express'
 
 const app: Express = express();
 
@@ -13,4 +14,6 @@ app.get('/:id', (req: Request, res: Response) => {
     // create a new file explorer.
 });
 
-export default app;
+app.get('/file/:id', (req: Request, res: Response) => {
+    // Opens the file under the id
+});
