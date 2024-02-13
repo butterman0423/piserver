@@ -1,4 +1,10 @@
+export enum ENTRY_TYPE {
+    REGULAR, DIRECTORY
+}
+
 export interface EntryInfo {
-    name: string,
-    extension: string,
+    id: number          // db row id
+    type: ENTRY_TYPE
+    name: string        
+    extension: string
 }
