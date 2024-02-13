@@ -1,6 +1,10 @@
 # React Learn Resource
 https://react.dev/learn/describing-the-ui
 
+# SQLite3 API Resource
+
+https://github.com/TryGhost/node-sqlite3/wiki/API
+
 # Welcome to Remix!
 
 - [Remix Docs](https://remix.run/docs)
