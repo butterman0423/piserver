@@ -2,8 +2,10 @@
 https://react.dev/learn/describing-the-ui
 
 # SQLite3 API Resource
-
 https://github.com/TryGhost/node-sqlite3/wiki/API
+
+# Express API Resource
+https://expressjs.com/en/4x/api.html#app
 
 # Welcome to Remix!
 
