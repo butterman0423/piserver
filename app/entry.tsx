@@ -1,27 +1,26 @@
 import { ENTRY_TYPE, EntryInfo } from "src/explorer";
 import strings from "res/strings.json";
 
-function handleClick(ev: React.MouseEvent<HTMLDivElement, MouseEvent>, entry: EntryInfo): void {
+function getDestURL(entry: EntryInfo): string {
     const {id, type} = entry;
-
     switch(type) {
         case ENTRY_TYPE.DIRECTORY:
-            window.location.assign(`${strings.path_explorer_path}${id}`);
-            break;
+            return `${strings.path_explorer_path}${id}`;
         case ENTRY_TYPE.REGULAR:
-            window.location.assign(`${strings.path_file_path}${id}`);
-            break;
+            return `${strings.path_file_path}${id}`;
         default:
-            console.error("Error: Unknown Entry Type");
+            throw new Error(strings.error_unknown_entry);
     }
 }
 
 export default function Entry({ entry }: { entry: EntryInfo }) {
     const { name, extension } = entry;
     
-    return ( 
-        <div onClick={(ev) => handleClick(ev, entry)}>
-            <p>{name}.{extension}</p>
-        </div>
+    return (
+        <a href={getDestURL(entry)}>
+            <div>
+                <p>{name}.{extension}</p>
+            </div>
+        </a>
     )
 }
