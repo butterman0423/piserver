@@ -9,7 +9,8 @@ function getDestURL(entry: EntryInfo): string {
         case ENTRY_TYPE.REGULAR:
             return `${strings.path_file_path}${id}`;
         default:
-            throw new Error(strings.error_unknown_entry);
+            console.error(strings.error_unknown_entry);
+            return "";
     }
 }
 
