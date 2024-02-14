@@ -26,10 +26,11 @@ function getIconInfo(entry: EntryInfo) : {img_res: string, alt: string} {
 
 export default function Entry({ entry }: { entry: EntryInfo }) {
     const { name, extension } = entry;
+    const url = getDestURL(entry);
     const { img_res, alt } = getIconInfo(entry);
     
     return (
-        <a href={getDestURL(entry)}>
+        <a href={url}>
             <div>
                 <img
                     src={img_res}
