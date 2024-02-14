@@ -3,5 +3,14 @@
     "path_explorer_path": "/",
     "path_file_path": "/file/",
 
+    "img_directory": "",
+    "img_alt_directory": "",
+    "img_text": "",
+    "img_alt_text": "",
+    "img_video": "",
+    "img_alt_video": "",
+    "img_unknown": "",
+    "img_alt_unknown": "",
+
     "error_unknown_entry": "Error: Unkown Entry Type"
 }
