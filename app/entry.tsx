@@ -1,5 +1,4 @@
-import { ENTRY_TYPE } from "src/explorer";
-import { EntryInfo } from "src/explorer"
+import { ENTRY_TYPE, EntryInfo } from "src/explorer";
 import strings from "res/strings.json";
 
 function handleClick(ev: React.MouseEvent<HTMLDivElement, MouseEvent>, entry: EntryInfo): void {
