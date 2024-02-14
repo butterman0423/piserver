@@ -1,4 +1,4 @@
-import { ENTRY_TYPE, EntryInfo } from "src/explorer";
+import { ENTRY_TYPE, EntryInfo } from "src/types/entry_types";
 import strings from "res/strings.json";
 
 function getDestURL(entry: EntryInfo) : string {

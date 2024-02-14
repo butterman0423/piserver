@@ -1,4 +1,4 @@
-import { EntryInfo } from "src/explorer"
+import { EntryInfo } from "src/types/entry_types"
 import Entry from "./entry"
 
 export default function Explorer({ entries } : { entries: Array<EntryInfo> }) {
