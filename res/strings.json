@@ -1,3 +1,6 @@
 {
-    
+    "path_explorer": "/:id",
+    "path_file": "/file/:id",
+
+    "error_unknown_entry": "Error: Unkown Entry Type"
 }
