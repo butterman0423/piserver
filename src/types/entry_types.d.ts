@@ -1,5 +1,5 @@
 export enum ENTRY_TYPE {
-    REGULAR, DIRECTORY
+    UNKNOWN, DIRECTORY, TEXT, VIDEO
 }
 
 export interface EntryInfo {

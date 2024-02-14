@@ -6,11 +6,11 @@ function getDestURL(entry: EntryInfo) : string {
     switch(type) {
         case ENTRY_TYPE.DIRECTORY:
             return `${strings.path_explorer_path}${id}`;
-        case ENTRY_TYPE.REGULAR:
-            return `${strings.path_file_path}${id}`;
-        default:
+        case ENTRY_TYPE.UNKNOWN:
             console.error(strings.error_unknown_entry);
             return "";
+        default:
+            return `${strings.path_file_path}${id}`;
     }
 }
 
