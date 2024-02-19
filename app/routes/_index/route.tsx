@@ -6,7 +6,13 @@ export default function Explorer({ entries } : { entries: Array<EntryInfo> }) {
     
     return (
         <div>
-            <div>{entryEls}</div>
+            {entries.length ? 
+                <div>
+                    { entries.map((data, idx) => <Entry key={idx} entry={data}/>) }
+                </div> 
+            :
+                <p>No content found</p>
+            }
         </div>
     )
 }
