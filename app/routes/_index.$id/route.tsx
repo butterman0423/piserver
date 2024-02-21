@@ -1,5 +1,12 @@
+import type { LoaderFunctionArgs } from "@remix-run/node"
+import { json } from "@remix-run/node"
 import { EntryInfo } from "src/types/entry_types"
 import Entry from "./entry"
+
+export const loader = async ({ params } : LoaderFunctionArgs) => {
+    const id = params.id;
+    return json({ id });
+}
 
 export default function Explorer({ entries } : { entries: Array<EntryInfo> }) {
     return (
