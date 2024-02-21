@@ -4,8 +4,11 @@ import { EntryInfo } from "src/types/entry_types"
 import Entry from "./entry"
 
 export const loader = async ({ params } : LoaderFunctionArgs) => {
-    const id = params.id;
-    return json({ id });
+    const path = params["*"];
+
+    // Something that parses the path and returns file data
+
+    return json("");
 }
 
 export default function Explorer({ entries } : { entries: Array<EntryInfo> }) {
