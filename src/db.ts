@@ -5,9 +5,6 @@ const db = new Database(":memory:")
 
 export async function query(tbl: string) {
     db.serialize(() => {
-        db.prepare("SELECT * FROM (?)", tbl)
-        .all()
-
         db.all("SELECT * FROM (?)", tbl, (err, rows) => {
 
         })
