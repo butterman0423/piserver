@@ -3,6 +3,7 @@ https://react.dev/learn/describing-the-ui
 
 # SQLite3 API Resource
 https://github.com/TryGhost/node-sqlite3/wiki/API
+https://www.sqlitetutorial.net/sqlite-nodejs/connect/
 
 # Express API Resource
 https://expressjs.com/en/4x/api.html#app
