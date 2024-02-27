@@ -1,7 +1,6 @@
 import { Database } from "sqlite3";
 
-// Temporary db, will reference file later
-const db = new Database(":memory:")
+const db: Database = new Database("../res/explorer.db")
 
 export async function query(tbl: string) {
     db.serialize(() => {
