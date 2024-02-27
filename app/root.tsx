@@ -1,8 +1,14 @@
-import { Outlet } from "@remix-run/react";
+import { Links, Outlet } from "@remix-run/react";
 
 export default function App() {
-    return 
+    return (
     <>
-        <Outlet />
+        <html>
+            <Links/>
+        </html>
+        <body>
+            <Outlet />
+        </body>
     </>
+    )
 }
