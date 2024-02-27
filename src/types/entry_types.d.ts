@@ -15,3 +15,8 @@ export type EntryInfo = {
     name: string        
     extension: string
 }
+
+export type EntryIcon = {
+    img_res: string,
+    alt: string
+}
