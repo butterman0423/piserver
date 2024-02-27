@@ -23,38 +23,31 @@ function error_thrower(err) {
     if(err) { throw err }
 }
 
-function fill_db(db, path) {
-    fs.opendir(path)
-    .then(dir => {
-        const files = [];
-        
-        let file;
-        while( file = dir.readSync() ) {
-            files.push(file);
-            if(file.isDirectory()) {
-                fillDatabase(db, file.path);
-            }
+async function fill_db(db, path) {
+    const dir = await fs.opendir(path);
+    const files = [];
+
+    for await (const dirent of dir) {
+        if(dirent.isDirectory()) {
+            fill_db(db, dirent.path);
         }
 
-        files.map( dirent => {
-            let dot_ext = dirent.name.lastIndexOf(".");
-            return {
-                name: dirent.name,
-                ext: dot_ext != -1 ? dirent.name.substring(dot_ext) : null,
-                is_dir: dirent.isDirectory() ? 1 : 0
-            }
+        let dot_ext = dirent.name.lastIndexOf(".");
+        files.push({
+            name: dirent.name,
+            ext: dot_ext != -1 ? dirent.name.substring(dot_ext) : null,
+            is_dir: dirent.isDirectory() ? 1 : 0
         });
+    }
 
-        db.serialize(async () => {
-            db.run(CREATE_INST, path);
+    db.serialize(() => {
+        db.run(CREATE_INST, path);
 
-            const stmt = db.prepare(INSERT_INST, path);
-            files.forEach(entry => {
-                stmt.run(entry);
-            })
+        const stmt = db.prepare(INSERT_INST, path);
+        files.forEach(entry => {
+            stmt.run(entry);
         })
     })
-    .catch(error_thrower);
 }
 
 // MAIN //
