@@ -19,10 +19,6 @@ const INSERT_INST =
 VALUES ($name, $ext, $is_dir)
 `;
 
-function error_thrower(err) {
-    if(err) { throw err }
-}
-
 async function fill_db(db, path) {
     const dir = await fs.opendir(path);
     const files = [];
@@ -51,7 +47,7 @@ async function fill_db(db, path) {
 }
 
 // MAIN //
-(() => {
+(async () => {
     // Argument check
     if(process.argv.length != 2) {
         throw "Usage: npm run configure -- <path>";
@@ -61,9 +57,11 @@ async function fill_db(db, path) {
     fs.unlink("../res/explorer.db")
     
     // Create new database file
-    const db = new Database("../res/explorer.db", error_thrower);
+    const db = new Database("../res/explorer.db", err => {if(err) throw err});
     
-    fill_db(db, process.argv[1]);
+    await fill_db(db, process.argv[1]);
+
+    db.close();
 }) ()
 
 
