@@ -1,6 +1,6 @@
 import { EntryInfo, QueryRow, ENTRY_TYPE } from "./types/entry_types";
 
-import { Database, RunResult } from "sqlite3";
+import { Database } from "sqlite3";
 import { EventEmitter } from "node:events"
 
 const db: Database = new Database("../res/explorer.db");
