@@ -31,7 +31,7 @@ async function fill_db(db, path) {
         let dot_ext = dirent.name.lastIndexOf(".");
         files.push({
             name: dirent.name,
-            ext: dot_ext != -1 ? dirent.name.substring(dot_ext) : null,
+            ext: dot_ext != -1 ? dirent.name.substring(dot_ext) : "",
             is_dir: dirent.isDirectory() ? 1 : 0
         });
     }
