@@ -12,7 +12,11 @@ export async function query(tbl: string) : Promise<EntryInfo[]> {
         once(waiter, 'done'),
         () => {
             db.serialize(() => {
-                db.all("SELECT * FROM ?", tbl, (err: Error | null, rows: any[]) => {
+                db.all("SELECT * FROM ?", tbl, (err: Error | null, rows: QueryRow[]) => {
+                    if(err) {
+                        throw err;
+                    }
+
                     const entries = rows.map((row: QueryRow) : EntryInfo => 
                         ({
                             id: row.fid,
@@ -28,5 +32,5 @@ export async function query(tbl: string) : Promise<EntryInfo[]> {
         }
     ])
 
-    return data;
+    return data as EntryInfo[];
 }
