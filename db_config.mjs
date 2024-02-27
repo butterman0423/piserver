@@ -43,6 +43,7 @@ async function fill_db(db, path) {
         files.forEach(entry => {
             stmt.run(entry);
         })
+        stmt.finalize();
     })
 }
 
@@ -60,6 +61,8 @@ async function fill_db(db, path) {
     const db = new Database("../res/explorer.db", err => {if(err) throw err});
     
     await fill_db(db, process.argv[1]);
+
+    console.log("Configuration successful.")
 
     db.close();
 }) ()
