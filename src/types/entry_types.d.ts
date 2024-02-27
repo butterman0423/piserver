@@ -9,7 +9,7 @@ export type QueryRow = {
     is_dir: number
 }
 
-export interface EntryInfo {
+export type EntryInfo = {
     id: number          // db row id
     type: ENTRY_TYPE
     name: string        
