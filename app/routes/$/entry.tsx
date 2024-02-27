@@ -1,6 +1,7 @@
 import { ENTRY_TYPE, EntryInfo } from "src/types/entry_types";
 import { ENTRY_ICON_MAP } from "src/entry_maps";
 import strings from "res/strings.json";
+import { Link } from "@remix-run/react";
 
 function getDestURL(entry: EntryInfo) : string {
     const {id, type} = entry;
@@ -21,7 +22,7 @@ export default function Entry({ entry }: { entry: EntryInfo }) {
     const { img_res, alt } = ENTRY_ICON_MAP[entry.type];
     
     return (
-        <a href={url}>
+        <Link to={url}>
             <div>
                 <img
                     src={img_res}
@@ -31,6 +32,6 @@ export default function Entry({ entry }: { entry: EntryInfo }) {
             <div>
                 <p>{name}.{extension}</p>
             </div>
-        </a>
+        </Link>
     )
 }
