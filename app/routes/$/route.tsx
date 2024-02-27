@@ -1,17 +1,23 @@
 import type { LoaderFunctionArgs } from "@remix-run/node"
-import { json } from "@remix-run/node"
-import { EntryInfo } from "src/types/entry_types"
+
 import Entry from "./entry"
+import { query } from "src/db";
+import { useLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
 
 export const loader = async ({ params } : LoaderFunctionArgs) => {
     const path = params["*"];
 
-    // Something that parses the path and returns file data
+    if(path === undefined) {
+        throw "File path is undefined!";
+    }
 
-    return json("");
+    return json( await query(path) );
 }
 
-export default function Explorer({ entries } : { entries: Array<EntryInfo> }) {
+export default function Explorer() {
+    const entries = useLoaderData<typeof loader>()
+    
     return (
         <div>
             {entries.length ? 
