@@ -9,7 +9,6 @@ export async function query(tbl: string) : Promise<EntryInfo[]> {
     const waiter = new EventEmitter();
 
     const [data, _] = await Promise.all([
-        //new Promise((res: (value: EntryInfo[]) => void) => waiter.once('done', res)),
         once(waiter, 'done'),
         () => {
             db.serialize(() => {
