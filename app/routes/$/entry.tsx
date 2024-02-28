@@ -7,7 +7,7 @@ export default function Entry({ entry }: { entry: EntryInfo }) {
     const { img_res, alt } = ENTRY_ICON_MAP[entry.type];
     
     return (
-        <Link to={{pathname: ".", search: `?file=${id.toString()}`}} relative="path">
+        <Link to={{pathname: ".", search: `?file=${id}`}} relative="path">
             <div>
                 <img
                     src={img_res}
