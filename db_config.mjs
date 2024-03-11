@@ -9,8 +9,7 @@ import sqlite3 from 'sqlite3'
 import dbstrings from './res/db_strings.json'
 
 const { Database } = sqlite3
-const dirmap = {};
-const id = 0;
+let id = 1;
 
 function get_ftype(stat, name) {
     if( stat.isDirectory() ) {
@@ -37,22 +36,15 @@ async function add_entry(db, path) {
     const pdir = path.substring(0, idx);
     const fname = path.substring(idx);
 
-    if(dirmap.size == 0) {
-        dirmap.set(pwd, id++)
-    }
-
-    if( stat.isDirectory() ) {
-        dirmap.set(path, id++);
-    }
-
     db.run(dbstrings.INSERT_FINFO, {
         name: fname,
     });
     db.run(dbstrings.INSERT_FILE, {
         name: fname,
         path: path,
+        parent_path: pdir,
         type: get_ftype(stat, fname),
-        parent_id: dirmap[pdir],
+        info_id: id++
     });
 }
 

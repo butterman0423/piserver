@@ -1,7 +1,7 @@
 {
     "DATABASE_PATH": "./res/explorer.db",
 
-    "CREATE_FILE_TABLE": "CREATE TABLE files (fid INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE, path TEXT NOT NULL, type INTEGER CHECK(type >= 0), parent_id INTEGER, FOREIGN KEY (info_id) REFERENCES file_info (fid))",
+    "CREATE_FILE_TABLE": "CREATE TABLE files (fid INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE, path TEXT NOT NULL, parent_path TEXT NOT NULL, type INTEGER CHECK(type >= 0), FOREIGN KEY (info_id) REFERENCES file_info (fid))",
     "CREATE_FINFO_TABLE": "CREATE TABLE file_info (fid INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE)",
     "INSERT_FILE": "INSERT INTO files VALUES ($name, $type, $parent_id, $info_id)",
     "INSERT_FINFO": "INSERT INTO file_info VALUES ($name)"
