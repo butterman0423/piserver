@@ -1,70 +1,59 @@
 /**
- * This file creates the database for the server.
- * Only meant to be run via 'npm run configure'
+ * THIS FILE IS NOT MEANT TO BE RUN BY ITSELF!!!
+ * 
+ * RUN configure.sh TO CONFIGURE THIS SERVER'S DATABASE.
  */
 
-import * as fs from 'node:fs/promises'
-import { Database } from 'sqlite3'
+import { lstat } from "node:fs/promises"
+import sqlite3 from 'sqlite3'
+import dbstrings from './res/db_strings.json'
 
-const CREATE_INST =
-`CREATE TABLE ? (
-fid INTEGER PRIMARY KEY
-name TEXT NOT NULL
-extension TEXT
-is_dir INTEGER NOT NULL
-)`;
+const { Database } = sqlite3
+const dirmap = {};
+const id = 0;
 
-const INSERT_INST = 
-`INSERT INTO ? (name, extension, is_dir)
-VALUES ($name, $ext, $is_dir)
-`;
+async function add_entry(db, path) {
+    const stat = await lstat(path);
+    const idx = path.lastIndexOf("/");
 
-async function fill_db(db, path) {
-    const dir = await fs.opendir(path);
-    const files = [];
+    const pdir = path.substring(0, idx);
+    const fname = path.substring(idx);
 
-    for await (const dirent of dir) {
-        if(dirent.isDirectory()) {
-            fill_db(db, dirent.path);
-        }
-
-        let dot_ext = dirent.name.lastIndexOf(".");
-        files.push({
-            name: dirent.name,
-            ext: dot_ext != -1 ? dirent.name.substring(dot_ext) : "",
-            is_dir: dirent.isDirectory() ? 1 : 0
-        });
+    if(dirmap.size == 0) {
+        dirmap.set(pwd, id++)
     }
 
-    db.serialize(() => {
-        db.run(CREATE_INST, path);
+    if( stat.isDirectory() ) {
+        dirmap.set(path, id++);
+    }
 
-        const stmt = db.prepare(INSERT_INST, path);
-        files.forEach(entry => {
-            stmt.run(entry);
-        })
-        stmt.finalize();
-    })
+    db.run(dbstrings.INSERT_FINFO, {
+        name: "",
+    });
+    db.run(dbstrings.INSERT_FILE, {
+        name: fname,
+        path: path,
+        type: 1 + !stat.isDirectory(),
+        parent_id: dirmap[pdir],
+    });
 }
 
-// MAIN //
-(async () => {
-    // Argument check
-    if(process.argv.length != 2) {
-        throw "Usage: npm run configure -- <path>";
-    }
-    
-    // Remove any existing db file
-    fs.unlink("../res/explorer.db")
-    
-    // Create new database file
-    const db = new Database("../res/explorer.db", err => {if(err) throw err});
-    
-    await fill_db(db, process.argv[1]);
+// Create new database file
+const db = new Database("./res/explorer.db", err => { if(err) throw err });
 
-    console.log("Configuration successful.")
+process.stdin.once('data', buffer => {
+    const data = buffer.toString('ascii').split("\n");
 
-    db.close();
-}) ()
+    db.serialize(async () => {
+        db.run(dbstrings.CREATE_FILE_TABLE);
+        db.run(dbstrings.CREATE_FINFO_TABLE);
+        
+        data.forEach(async path => await add_entry(db, path));
+
+        console.log("Configuration successful.")
+        db.close();
+    })
+    
+})
 
 
