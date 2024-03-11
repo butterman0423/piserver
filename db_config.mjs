@@ -53,7 +53,4 @@ process.stdin.once('data', buffer => {
         console.log("Configuration successful.")
         db.close();
     })
-    
 })
-
-
