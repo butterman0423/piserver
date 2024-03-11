@@ -33,7 +33,7 @@ async function add_entry(db, path) {
     db.run(dbstrings.INSERT_FILE, {
         name: fname,
         path: path,
-        type: 1 + !stat.isDirectory(),
+        type: 1 + !stat.isDirectory(),      // This is temporary
         parent_id: dirmap[pdir],
     });
 }
