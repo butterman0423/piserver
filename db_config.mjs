@@ -46,7 +46,7 @@ async function add_entry(db, path) {
     }
 
     db.run(dbstrings.INSERT_FINFO, {
-        name: "",
+        name: fname,
     });
     db.run(dbstrings.INSERT_FILE, {
         name: fname,
