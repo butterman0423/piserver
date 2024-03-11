@@ -12,6 +12,24 @@ const { Database } = sqlite3
 const dirmap = {};
 const id = 0;
 
+function get_ftype(stat, name) {
+    if( stat.isDirectory() ) {
+        return 1;
+    }
+
+    const ext = name.match(/\..+$/g);
+    if(ext) {
+        switch( ext[0] ) {
+            case ".txt":
+                return 2;
+            case ".mp4":
+                return 3;
+        }
+    }
+    
+    return 0; // Otherwise, unknown
+}
+
 async function add_entry(db, path) {
     const stat = await lstat(path);
     const idx = path.lastIndexOf("/");
@@ -33,7 +51,7 @@ async function add_entry(db, path) {
     db.run(dbstrings.INSERT_FILE, {
         name: fname,
         path: path,
-        type: 1 + !stat.isDirectory(),      // This is temporary
+        type: get_ftype(stat, fname),
         parent_id: dirmap[pdir],
     });
 }
