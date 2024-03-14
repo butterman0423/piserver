@@ -1,31 +1,32 @@
 import { EntryInfo, QueryRow, FileInfo } from "./types/entry_types";
 
-import { Database, Statement } from "sqlite3";
+import { Database } from "sqlite3";
 import { EventEmitter, once } from "node:events";
 import dbstrings from "res/db_strings.json";
 
-type DBCallback = (waiter: EventEmitter, err: Error | null, rows: QueryRow[]) => void;
+type DBCallback = (db: Database, waiter: EventEmitter) => void;
 const SQL_DONE = 'done';
 
-const db: Database = new Database("../res/explorer.db");
-
-async function run(stmt: Statement, clbk: DBCallback): Promise<any[]> {
+async function run(clbk: DBCallback): Promise<QueryRow[]> {
+    const db: Database = new Database("../res/explorer.db");
     const waiter = new EventEmitter();
 
     const [res, _] = await Promise.all([
-        once(waiter, SQL_DONE),
-        stmt.all((err, rows: QueryRow[]) => clbk(waiter, err, rows))
+        once(waiter, SQL_DONE) as Promise<QueryRow[]>,
+        db.serialize(() => clbk(db, waiter))
     ]);
     
     return res;
 }
 
 export async function fetchContents(path: string) : Promise<EntryInfo[]> {
-    const stmt: Statement = db.prepare(dbstrings.QUERY_FILE, path);
-    const res = await run(stmt, (waiter, err, rows) => {
-        if(err) { throw err; }
-
-        const entries = rows.map(row => row as EntryInfo);
+    const res = await run((db, waiter) => {
+        const entries: QueryRow[] = [];
+        db.each(dbstrings.QUERY_FILE, path, (err, row: QueryRow) => {
+            if(err) { throw err; }
+            entries.push(row);
+        })
+        
         waiter.emit(SQL_DONE, entries);
     });
 
