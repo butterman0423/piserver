@@ -1,8 +1,11 @@
 import { EntryInfo, QueryRow, FileInfo } from "./types/entry_types";
 
-import { Database } from "sqlite3";
+import sqlite3 from 'sqlite3'
 import { EventEmitter, once } from "node:events";
 import dbstrings from "res/db_strings.json";
+
+type Database = sqlite3.Database;
+const { Database } = sqlite3;
 
 type DBCallback = (db: Database, waiter: EventEmitter) => void;
 const SQL_DONE = 'done';
