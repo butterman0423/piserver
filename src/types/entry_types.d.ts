@@ -1,7 +1,3 @@
-export enum ENTRY_TYPE {
-    UNKNOWN, DIRECTORY, TEXT, VIDEO
-}
-
 export type QueryRow = EntryInfo | FileInfo
 
 export type EntryInfo = {

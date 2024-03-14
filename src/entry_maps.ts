@@ -1,5 +1,9 @@
-import { ENTRY_TYPE, EntryIcon } from "./types/entry_types";
+import type { EntryIcon } from "src/types/entry_types.d.ts";
 import strings from "res/strings.json";
+
+export enum ENTRY_TYPE {
+    UNKNOWN, DIRECTORY, TEXT, VIDEO
+}
 
 export const ENTRY_ICON_MAP : {[key: number]: EntryIcon } = {
     [ENTRY_TYPE.UNKNOWN]: {
