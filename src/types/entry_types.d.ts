@@ -2,21 +2,20 @@ export enum ENTRY_TYPE {
     UNKNOWN, DIRECTORY, TEXT, VIDEO
 }
 
-export type QueryRow = {
-    fid: number,
-    name: string,
-    extension: string,
-    is_dir: number
-}
+export type QueryRow = EntryInfo | FileInfo
 
 export type EntryInfo = {
-    id: number          // db row id
+    fid: number          // db row id
     type: ENTRY_TYPE
-    name: string        
-    extension: string
+    name: string
+    info_id: number
 }
 
 export type EntryIcon = {
     img_res: string,
     alt: string
+}
+
+export type FileInfo = {
+
 }

@@ -1,7 +1,8 @@
-import { EntryInfo, QueryRow, ENTRY_TYPE } from "./types/entry_types";
+import { EntryInfo, QueryRow, FileInfo } from "./types/entry_types";
 
 import { Database, Statement } from "sqlite3";
-import { EventEmitter, once } from "node:events"
+import { EventEmitter, once } from "node:events";
+import dbstrings from "res/db_strings.json";
 
 type DBCallback = (waiter: EventEmitter, err: Error | null, rows: QueryRow[]) => void;
 const SQL_DONE = 'done';
@@ -19,24 +20,19 @@ async function run(stmt: Statement, clbk: DBCallback): Promise<any[]> {
     return res;
 }
 
-export async function query(tbl: string) : Promise<EntryInfo[]> {
-    const stmt: Statement = db.prepare("SELECT * FROM ?", tbl);
+export async function fetchContents(path: string) : Promise<EntryInfo[]> {
+    const stmt: Statement = db.prepare(dbstrings.QUERY_FILE, path);
     const res = await run(stmt, (waiter, err, rows) => {
-        if(err) {
-            throw err;
-        }
+        if(err) { throw err; }
 
-        const entries = rows.map((row: QueryRow) : EntryInfo => 
-            ({
-                id: row.fid,
-                name: row.name,
-                extension: row.extension,
-                type: ENTRY_TYPE.UNKNOWN        // Placeholder for now
-            })
-        );
-
+        const entries = rows.map(row => row as EntryInfo);
         waiter.emit(SQL_DONE, entries);
     });
 
-    return res as EntryInfo[]
+    return res as EntryInfo[];
+}
+
+// TODO
+export async function fetchFileInfo(id: number) : Promise<FileInfo> {
+    return {};
 }

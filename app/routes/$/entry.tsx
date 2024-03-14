@@ -3,11 +3,11 @@ import { ENTRY_ICON_MAP } from "src/entry_maps";
 import { Link } from "@remix-run/react";
 
 export default function Entry({ entry }: { entry: EntryInfo }) {
-    const { id, name, extension } = entry;
+    const { info_id, name } = entry;
     const { img_res, alt } = ENTRY_ICON_MAP[entry.type];
     
     return (
-        <Link to={{pathname: ".", search: `?file=${id}`}} relative="path">
+        <Link to={{pathname: ".", search: `?file=${info_id}`}} relative="path">
             <div>
                 <img
                     src={img_res}
@@ -15,7 +15,7 @@ export default function Entry({ entry }: { entry: EntryInfo }) {
                 />
             </div>
             <div>
-                <p>{name}.{extension}</p>
+                <p>{name}</p>
             </div>
         </Link>
     )

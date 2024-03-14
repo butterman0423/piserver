@@ -2,7 +2,7 @@ import type { LoaderFunctionArgs, TypedResponse } from "@remix-run/node"
 import type { EntryInfo } from "src/types/entry_types"
 
 import Entry from "./entry"
-import { query } from "src/db";
+import { fetchContents } from "src/db";
 import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 
@@ -24,7 +24,7 @@ export const loader = async ({ params, request } : LoaderFunctionArgs) : Promise
     if(fid === null) {
         return json({
             file_query: false,
-            res: await query(path)
+            res: await fetchContents(path)
         });
     }
 
