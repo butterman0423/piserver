@@ -6,7 +6,7 @@
 
 import { lstat } from "node:fs/promises"
 import sqlite3 from 'sqlite3'
-import dbstrings from './res/db_strings.json'
+import dbstrings from './res/db_strings.json' with { type: "json" }
 
 const { Database } = sqlite3
 let id = 1;
