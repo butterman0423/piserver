@@ -29,25 +29,6 @@ function get_ftype(stat, name) {
     return 0; // Otherwise, unknown
 }
 
-async function add_entry(db, path) {
-    const stat = await lstat(path);
-    const idx = path.lastIndexOf("/");
-
-    const pdir = path.substring(0, idx);
-    const fname = path.substring(idx);
-
-    db.run(dbstrings.INSERT_FINFO, {
-        name: fname,
-    });
-    db.run(dbstrings.INSERT_FILE, {
-        name: fname,
-        path: path,
-        parent_path: pdir,
-        type: get_ftype(stat, fname),
-        info_id: id++
-    });
-}
-
 process.stdin.once('data', buffer => {
     // Create new database file
     const db = new Database("./res/explorer.db", err => { if(err) throw err });
